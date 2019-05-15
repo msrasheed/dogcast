@@ -3,7 +3,9 @@
 #include <sys/types.h> //for constants
 #include <sys/socket.h> //for socket, bind, listen, and accept
 #include <string.h> //for memset
-#include <netinet/in.h> //for sockaddr_in
+#include <netinet/in.h> //for sockaddr_in and sockaddr
+#include <unistd.h> //for read
+
 
 int main(int argc, char ** argv)
 {
@@ -55,7 +57,7 @@ int main(int argc, char ** argv)
         for ip networking use sockaddr_in
     address_len: length of passed address
     */
-    int binderr = bind(server_fd, (sockaddr *)&address, sizeof(address));
+    int binderr = bind(server_fd, (struct sockaddr *)&address, sizeof(address));
     if (binderr < 0)
     {
         fprintf(stderr, "socket bind failed\n");
@@ -94,7 +96,10 @@ int main(int argc, char ** argv)
 
         char buffer[30000] = {0};
         long valread = read(new_socket, buffer, 30000);
-        fprintf(stdout, "%s\n", buffer);
+        if (valread > 0) 
+        {
+            fprintf(stdout, "%s\n", buffer);
+        }
         close(new_socket);
     }
 }
