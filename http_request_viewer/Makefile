@@ -1,9 +1,9 @@
-TARGET = httpserver
+TARGET = httprequestviewer
 GCC = gcc
 CFLAGS = -g -std=c99 -Wall -Wshadow -Wvla -Werror -pedantic
 CC = $(GCC) $(CFLAGS)
 
-SRCS = httpserver
+SRCS = httprequestviewer.c
 
 OBJS = $(SRCS:%.c=%.o)
 VALGRIND = valgrind --tool=memcheck --verbose --log-file

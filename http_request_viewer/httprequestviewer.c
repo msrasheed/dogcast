@@ -38,6 +38,7 @@ int main(int argc, char ** argv)
     };
     */
     struct sockaddr_in address;
+    int addrlen = sizeof(address);
     const int PORT = 80; //where client can reach at
     /* htonl converts a long integer (e.g. address) to a network representation */
     /* htons converts a short integer (e.g. port) to a network representation */
@@ -74,14 +75,26 @@ int main(int argc, char ** argv)
         return EXIT_FAILURE;
     }
 
-    /*
-    accept - takes connection off queue and creates a new socket for that connection
-        by default, socket operations are blocking, and accept will block until there is a connection available on queue
-    int accept(int socket, struct sockaddr *restrict address, socklen_t *restrict address_len);
-    socket: the socket set up to listen for connections
-    address: struct to get filled up by accept - gets filled with client connection info
-    */
+    while (1)
+    {
+        /*
+        accept - takes connection off queue and creates a new socket for that connection
+            by default, socket operations are blocking, and accept will block until there is a connection available on queue
+        int accept(int socket, struct sockaddr *restrict address, socklen_t *restrict address_len);
+        socket: the socket set up to listen for connections
+        address: struct to get filled up by accept - gets filled with client connection info
+        adderss_len: length of address (sizeof)
+        */
+        int new_socket = accept(server_fd, (struct sockaddr *) &address, (socklen_t *)&addrlen);
+        if (new_socket < 0)
+        {
+            fprintf(stderr, "accpet error\n");
+            return EXIT_FAILURE;
+        }
 
-
-
+        char buffer[30000] = {0};
+        long valread = read(new_socket, buffer, 30000);
+        fprintf(stdout, "%s\n", buffer);
+        close(new_socket);
+    }
 }
