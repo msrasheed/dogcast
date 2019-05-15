@@ -6,6 +6,7 @@
 #include <netinet/in.h> //for sockaddr_in and sockaddr
 #include <unistd.h> //for read
 
+//#define PORT 8080
 
 int main(int argc, char ** argv)
 {
@@ -19,7 +20,7 @@ int main(int argc, char ** argv)
 
     */
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (server_fd < 0)
+    if (server_fd <= 0)
     {
         fprintf(stderr, "failed to create socket\n");
         return EXIT_FAILURE;
@@ -41,13 +42,16 @@ int main(int argc, char ** argv)
     */
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    const int PORT = 80; //where client can reach at
+    const int PORT = 8080; //where client can reach at
     /* htonl converts a long integer (e.g. address) to a network representation */
     /* htons converts a short integer (e.g. port) to a network representation */
-    memset((char*)&address, 0, sizeof(address));
+
+    memset((char*)&address, '\0', sizeof(address));
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = htonl(INADDR_ANY);
-    address.sin_port = htons(PORT);
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons( PORT );
+
+    memset(address.sin_zero, '\0', sizeof address.sin_zero);
 
     /*
     int bind(int socket, const struct sockaddr *address, socklen_t address_len)
@@ -60,6 +64,8 @@ int main(int argc, char ** argv)
     int binderr = bind(server_fd, (struct sockaddr *)&address, sizeof(address));
     if (binderr < 0)
     {
+        perror("in bind");
+        fprintf(stdout, "%d\n", binderr);
         fprintf(stderr, "socket bind failed\n");
         return EXIT_FAILURE;
     }
@@ -76,6 +82,8 @@ int main(int argc, char ** argv)
         fprintf(stderr, "listen failed\n");
         return EXIT_FAILURE;
     }
+
+    fprintf(stdout, "listening\n");
 
     while (1)
     {
