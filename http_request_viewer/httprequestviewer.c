@@ -85,7 +85,8 @@ int main(int argc, char ** argv)
 
     fprintf(stdout, "listening\n");
 
-    while (1)
+    int cont = 1;
+    while (cont)
     {
         /*
         accept - takes connection off queue and creates a new socket for that connection
@@ -109,5 +110,9 @@ int main(int argc, char ** argv)
             fprintf(stdout, "%s\n", buffer);
         }
         close(new_socket);
+
+
+        fscanf(stdin, "Continue 1|0: %d", &cont);
     }
+    close(server_fd);
 }
