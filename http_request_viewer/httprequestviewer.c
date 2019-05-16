@@ -42,7 +42,7 @@ int main(int argc, char ** argv)
     */
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    const int PORT = 8080; //where client can reach at
+    const int PORT = 80; //where client can reach at
     /* htonl converts a long integer (e.g. address) to a network representation */
     /* htons converts a short integer (e.g. port) to a network representation */
 
@@ -111,8 +111,8 @@ int main(int argc, char ** argv)
         }
         close(new_socket);
 
-
-        fscanf(stdin, "Continue 1|0: %d", &cont);
+	fprintf(stdout, "Continue 1|0: ");
+        fscanf(stdin, "%d", &cont);
     }
     close(server_fd);
 }
