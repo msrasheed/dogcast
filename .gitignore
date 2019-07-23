@@ -1,2 +1,3 @@
-/nexxcast-1.0.0
+/nexxcast-1.0.0/*
 !/nexxcast-1.0.0/src
+!/nexxcast-1.0.0/pom.xml
