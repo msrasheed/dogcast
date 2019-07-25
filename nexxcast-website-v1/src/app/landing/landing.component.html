@@ -1,0 +1,9 @@
+<form (ngSubmit)="goToParty()" #goToPartyForm="ngForm">
+  <input type="text" name="partyId" placeholder="Party ID" ngModel #partyIdField required><br>
+  <input type="submit" value="Let's Go" [disabled]="goToPartyForm.invalid">
+</form>
+
+<button type="button" name="createParty">Create Party</button>
+
+<pre>{{goToPartyForm.invalid}}</pre>
+<pre>{{goToPartyForm.value | json}}</pre>
