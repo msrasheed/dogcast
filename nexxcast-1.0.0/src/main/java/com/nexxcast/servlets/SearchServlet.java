@@ -35,14 +35,21 @@ public class SearchServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String res = null;
 		
-		if (request.getParameter("q") != null) {
+		String query = request.getParameter("q");
+		if (query != null && !query.equals("")) {
 			Properties headers = new Properties();
 			String authVal = SpotifyAppClient.getTokenType() + " " + SpotifyAppClient.getAccessToken();
 			headers.setProperty("Authorization", authVal);
 			
 			Properties parameters = new Properties();
-			parameters.setProperty("q", request.getParameter("q"));
-			parameters.setProperty("type", "track");
+			parameters.setProperty("q", query);
+			
+			String types = request.getParameter("type");
+			System.out.println(request.getParameter("type"));
+			if (types == null || types.equals("")) {
+				types = "track,artist,album,playlist";
+			}
+			parameters.setProperty("type", types);
 			parameters.setProperty("limit", "5");
 			
 			String url = "https://api.spotify.com/v1/search";
