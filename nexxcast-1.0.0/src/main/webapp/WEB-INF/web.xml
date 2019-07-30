@@ -28,4 +28,17 @@
     <servlet-name>SearchServlet</servlet-name>
     <url-pattern>/SearchServlet</url-pattern>
   </servlet-mapping>
+  <listener>
+    <listener-class>com.nexxcast.servlets.NexxcastContextListener</listener-class>
+  </listener>
+  <servlet>
+    <description></description>
+    <display-name>SpotifyAuthServlet</display-name>
+    <servlet-name>SpotifyAuthServlet</servlet-name>
+    <servlet-class>com.nexxcast.servlets.hosts.SpotifyAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpotifyAuthServlet</servlet-name>
+    <url-pattern>/host/spotifyauth</url-pattern>
+  </servlet-mapping>
 </web-app>

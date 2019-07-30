@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Success</title>
+</head>
+<body>
+	<script type="text/javascript">
+		let nexxChannel = new BroadcastChannel("nexxcast-spotify-signin");
+		nexxChannel.postMessage("success");
+	</script>
+	Successfully logged in
+</body>
+</html>
