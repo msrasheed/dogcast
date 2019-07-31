@@ -1,0 +1,27 @@
+:host {
+  width: 300px;
+  margin: 10px auto;
+  display: block;
+}
+
+.search-field {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  position: relative;
+}
+
+input {
+  flex: 1 1 auto;
+  padding-right: 25px;
+}
+
+.search-field i {
+  position: absolute;
+  right: 0;
+  z-index: 5;
+}
+
+.search-field i:hover {
+  cursor: pointer;
+}
