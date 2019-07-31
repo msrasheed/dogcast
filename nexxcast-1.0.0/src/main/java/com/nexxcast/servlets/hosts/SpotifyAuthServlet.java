@@ -40,16 +40,14 @@ public class SpotifyAuthServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String state;
+		String res = null;
 		ServletContext sc = getServletContext();
-		HttpSession testSession = request.getSession(false);
-		if (testSession != null) {
-			System.out.println("hey worked");
-		}
+		HttpSession session = request.getSession(false);
+		String state = (String) session.getAttribute("state");
 		
-		if ((state = request.getParameter("state")) != null) {
-			HttpSession session = (HttpSession) sc.getAttribute(state);
-			sc.removeAttribute(state);
+		if (state.equals(request.getParameter("state"))) {
+			//HttpSession session = (HttpSession) sc.getAttribute(state);
+			//sc.removeAttribute(state);
 			
 			String code;
 			if ((code = request.getParameter("code"))!= null) {
@@ -70,8 +68,22 @@ public class SpotifyAuthServlet extends HttpServlet {
 				System.out.println(suc.getAccess_token());
 				response.sendRedirect("/nexxcast-1.0.0/signInSuccess.html");
 			}
+			else {
+				res = "no code";
+			}
+		}
+		else {
+			res = "none or incorrect state";
 		}
 				
+		try {
+			PrintWriter out = response.getWriter();
+			out.print(res);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -84,7 +96,8 @@ public class SpotifyAuthServlet extends HttpServlet {
 		RandomStringGenerator gen = (RandomStringGenerator) sc.getAttribute("randStringGen");
 		
 		String state = gen.nextString();
-		sc.setAttribute(state, session);
+		//sc.setAttribute(state, session);
+		session.setAttribute("state", state);
 		
 		JsonConstructor retVal = new JsonConstructor();
 		retVal.addKeyValuePair("client_id", SpotifyAppClient.clientID);
