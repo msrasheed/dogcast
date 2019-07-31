@@ -8,6 +8,10 @@ const routes: Routes = [
   {
     path: 'party',
     loadChildren: './party-guest/party-guest.module#PartyGuestModule'
+  },
+  {
+    path: 'host',
+    loadChildren: './party-host/party-host.module#PartyHostModule'
   }
 ];
 
