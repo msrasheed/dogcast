@@ -21,4 +21,8 @@ export class LandingComponent implements OnInit {
     console.log(this.goToPartyForm.controls.partyId.value);
     this.router.navigate(['party']);
   }
+
+  goToHost() {
+    this.router.navigate(['host']);
+  }
 }
