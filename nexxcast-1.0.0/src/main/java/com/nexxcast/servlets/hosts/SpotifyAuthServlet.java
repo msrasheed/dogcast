@@ -41,7 +41,6 @@ public class SpotifyAuthServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String res = null;
-		ServletContext sc = getServletContext();
 		HttpSession session = request.getSession(false);
 		String state = (String) session.getAttribute("state");
 		
@@ -64,8 +63,10 @@ public class SpotifyAuthServlet extends HttpServlet {
 				SpotifyUserCredentials suc;
 				suc = HttpUtility.httpPostGetObject(SpotifyUserCredentials.class, url, headers, params);
 				
+				
 				session.setAttribute("credentials", suc);
-				System.out.println(suc.getAccess_token());
+				System.out.println(suc.getAccess_token());				
+				
 				response.sendRedirect("/nexxcast-1.0.0/signInSuccess.html");
 			}
 			else {
@@ -93,7 +94,7 @@ public class SpotifyAuthServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		ServletContext sc = getServletContext();
-		RandomStringGenerator gen = (RandomStringGenerator) sc.getAttribute("randStringGen");
+		RandomStringGenerator gen = (RandomStringGenerator) sc.getAttribute("stateGen");
 		
 		String state = gen.nextString();
 		//sc.setAttribute(state, session);

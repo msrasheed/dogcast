@@ -1,5 +1,7 @@
 package com.nexxcast.servlets;
 
+import java.util.Random;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -33,7 +35,8 @@ public class NexxcastContextListener implements ServletContextListener {
          // TODO Auto-generated method stub
     	ServletContext sc = sce.getServletContext();
     	
-    	sc.setAttribute("randStringGen", new RandomStringGenerator());
+    	sc.setAttribute("stateGen", new RandomStringGenerator());
+    	sc.setAttribute("partyCodeGen", new RandomStringGenerator(4, new Random(), RandomStringGenerator.upper));
     }
 	
 }
