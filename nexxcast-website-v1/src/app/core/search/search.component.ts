@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { QueryRestfulService } from '@services/query-restful.service';
@@ -12,6 +12,8 @@ import { PagingObject, Track } from '@spotify/objects';
 export class SearchComponent implements OnInit {
 
   private searchField: FormControl;
+  @ViewChild('searchInput', {static: false}) searchInput;
+
   public albumResults: PagingObject;
   public trackResults: PagingObject;
   public artistResults: PagingObject;
@@ -53,5 +55,12 @@ export class SearchComponent implements OnInit {
 
   getArtistString(track: Track) {
     return track.artists.map(x => x.name).join(', ');
+  }
+
+  clearSearch() {
+    //console.log(this.searchInput);
+    this.searchInput.nativeElement.value = "";
+    this.showDropdown = false;
+    //console.log("click");
   }
 }

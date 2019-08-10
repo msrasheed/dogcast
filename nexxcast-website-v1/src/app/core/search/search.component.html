@@ -1,5 +1,9 @@
-<input type="text" placeholder="Search..." [formControl]="searchField">
-<div [style.display]="showDropdown ? 'block' : 'none'">
+<div class="search-field">
+  <input type="text" placeholder="Search..." [formControl]="searchField" #searchInput>
+  <i class="material-icons" *ngIf="showDropdown" (click)="clearSearch()">close</i>
+</div>
+
+<div *ngIf="showDropdown" [style.display]="showDropdown ? 'block' : 'none'">
   <app-search-item *ngFor="let track of trackResults.items"
                     [imageURL]="track.album.images[2].url"
                     [mainText]="track.name"

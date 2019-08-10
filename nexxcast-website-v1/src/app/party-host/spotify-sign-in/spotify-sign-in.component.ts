@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifySignInService } from '@services/spotify-sign-in.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-spotify-sign-in',
@@ -11,7 +12,7 @@ export class SpotifySignInComponent implements OnInit {
   private spotifyRedirectInfo: object;
   private stateLoaded: boolean = false;
 
-  constructor(public spotAuthHttp: SpotifySignInService) { }
+  constructor(public spotAuthHttp: SpotifySignInService, public router: Router) { }
 
   ngOnInit() {
     this.spotAuthHttp.getState().then(
@@ -28,5 +29,6 @@ export class SpotifySignInComponent implements OnInit {
 
   signIn() {
     this.spotAuthHttp.signIn(this.spotifyRedirectInfo);
+    this.router.navigate(['host', 'party']);
   }
 }

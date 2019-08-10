@@ -4,6 +4,10 @@
   flex-flow: column nowrap;
 }
 
-router-outlet {
+:host:last-child {
+  /* flex: 1 1 auto; */
+}
+
+.router-wrapper {
   flex: 1 1 auto;
 }
